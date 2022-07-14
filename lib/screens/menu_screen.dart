@@ -1,48 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tap_tap_tap/constants.dart';
-import 'package:tap_tap_tap/models/screen_animation_provider.dart';
+import 'package:tap_tap_tap/services/audio_provider.dart';
+import 'package:tap_tap_tap/services/screen_animation_provider.dart';
 import 'package:tap_tap_tap/reusable_widgets.dart';
+import 'package:tap_tap_tap/screens/playlist_screen.dart';
 import 'package:tap_tap_tap/theme.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
   @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  int i = 0;
+  @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
-    int i = 0;
-    return ChangeNotifierProvider<ScreenAnimationProvider>(
-      create: (context) => ScreenAnimationProvider(deviceWidth, deviceHeight),
-      child: Consumer<ScreenAnimationProvider>(
-        builder: ((context, value, child) {
-          return Scaffold(
-            backgroundColor: blackColor,
-            body: SafeArea(
-              maintainBottomViewPadding: true,
-              child: Stack(
+    var player = Provider.of<AudioProvider>(context, listen: false);
+    var provider = Provider.of<ScreenAnimationProvider>(context);
+    return Scaffold(
+      backgroundColor: blackColor,
+      body: SafeArea(
+        maintainBottomViewPadding: true,
+        child: Stack(
+          children: [
+            for (i = 0; i < 15; i++) ShowAnimation(i: i, provider: provider),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for(i = 0 ; i < 15 ; i++)
-                  ShowAnimation(i: i, provider: value),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        MenuItem(icon: Icons.queue_music_rounded, title: 'Playlist', onTap: (){}),
-                        const SizedBox(height: 24),
-                        MenuItem(icon: Icons.tune_rounded, title: 'Settings', onTap: (){}),
-                        const SizedBox(height: 24),
-                        MenuItem(icon: Icons.exit_to_app_rounded, title: 'Exit', onTap: (){}),
-                      ],
+                  GestureDetector(
+                    onTap: (() {
+                      player.pausePlayer();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PlaylistScreen(),
+                        ),
+                      );
+                      provider.pauseAnimation();
+                    }),
+                    child: const MenuItem(
+                      icon: Icons.queue_music_rounded,
+                      title: 'Playlist',
                     ),
                   ),
-
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
+                      player.pausePlayer();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PlaylistScreen(),
+                        ),
+                      );
+                      provider.resumeAnimation();
+                    },
+                    child: const MenuItem(
+                      icon: Icons.tune_rounded,
+                      title: 'Settings',
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const MenuItem(
+                      icon: Icons.arrow_back_rounded,
+                      title: 'Back',
+                    ),
+                  ),
                 ],
               ),
             ),
-          );
-        }),
+          ],
+        ),
       ),
     );
   }
@@ -53,11 +89,9 @@ class MenuItem extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.title,
-    required this.onTap,
   }) : super(key: key);
 
   final String title;
-  final Function onTap;
   final IconData icon;
 
   @override
@@ -86,31 +120,3 @@ class MenuItem extends StatelessWidget {
     );
   }
 }
-
-// class MenuButton extends StatelessWidget {
-//   const MenuButton({
-//     Key? key,
-//     required this.title,
-//     required this.onTap,
-//   }) : super(key: key);
-
-// final String title;
-// final Function onTap;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: GestureDetector(
-//         onTap: onTap(),
-//         child: CircleAvatar(
-//           backgroundColor: green,
-//           radius: 75,
-//           child: Text(
-//             title,
-//             style: bigText,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

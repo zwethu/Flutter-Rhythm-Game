@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tap_tap_tap/constants.dart';
-import 'package:tap_tap_tap/models/screen_animation_provider.dart';
+import 'package:tap_tap_tap/services/screen_animation_provider.dart';
 
 class ShowAnimation extends StatelessWidget {
   const ShowAnimation({
