@@ -26,6 +26,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
     return WillPopScope(
       onWillPop: () async {
         provider.resumeAnimation();
+        player.resumePlayer();
         return true;
       },
       child: ChangeNotifierProvider<SonglistsProvider>(
@@ -50,6 +51,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                       provider.resumeAnimation();
                       data.deleteAll();
                       Navigator.pop(context);
+                      player.resumePlayer();
                     },
                     icon: const Icon(Icons.arrow_back_ios_rounded),
                   ),
@@ -80,12 +82,12 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: (() {
-                          print(data.pathsList);
-                          player.pausePlayer();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => GameScreen(song: data.pathsList![index],),
+                              builder: (context) => GameScreen(
+                                song: data.pathsList![index],
+                              ),
                             ),
                           );
                         }),
