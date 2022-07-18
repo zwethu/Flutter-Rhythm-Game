@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: GoogleFonts.nunito().fontFamily,),
+        theme: ThemeData(
+          fontFamily: GoogleFonts.nunito().fontFamily,
+        ),
         home: const Home(),
       ),
     );

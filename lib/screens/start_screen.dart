@@ -41,11 +41,6 @@ class _AnimatedScreenState extends State<AnimatedScreen> {
   int i = 0;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;

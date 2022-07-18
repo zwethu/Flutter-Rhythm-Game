@@ -1,32 +1,45 @@
-import 'package:flutter/cupertino.dart';
-import 'package:just_audio/just_audio.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:just_audio/just_audio.dart';
 
-class GameAudioProvider extends ChangeNotifier {
-  AudioPlayer player = AudioPlayer();
-  int? time;
-  int minutes = 0;
-  int seconds = 0;
+// class GameAudioProvider extends ChangeNotifier {
+//   AudioPlayer player = AudioPlayer();
+//   int duration = 0;
+//   bool pauseGame = false;
 
-  void playAudio(String input) async {
-    final duration = await player.setAsset(input);
-    getDuration(duration);
-  }
+//   void playGameAudio(String input) async {
+//     {
+//       if (input.contains('assets')) {
+//         await player.setAsset(input).then((value){
+//           getDuration(value!);
+//         });
+//         await player.play();
+//       } else if (input
+//           .contains('/data/user/0/com.example.tap_tap_tap/cache/filepicker/')) {
+//         await player.setFilePath(input).then((value) {
+//           getDuration(value!);
+//         });
+//         await player.play();
+//       }
+//     }
+//   }
 
-  void getDuration(Duration? duration) {
-    time = duration?.inSeconds;
-    minutes = (time! / 60).floor();
-    seconds = (time! % 60);
-  }
+//   void getDuration(Duration time) {
+//     int? minutes = time.inMinutes;
+//     int? seconds = time.inSeconds;
+//     duration = (minutes * 60) + seconds;
+//     notifyListeners();
+//   }
 
-  void stopPlayer() {
-    player.stop();
-  }
+//   void pauseGameAudio() async {
+//     await player.pause();
+//   }
 
-  void pausePlayer() {
-    player.pause();
-  }
+//   void changeBool() {
+//     pauseGame = !pauseGame;
+//     notifyListeners();
+//   }
 
-  void resumePlayer() {
-    player.play();
-  }
-}
+//   void resumePlayer() async {
+//     await player.play();
+//   }
+// }
