@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 
 class GameAnimationProvider extends ChangeNotifier {
+  int mark = 0;
   double topLocation = 1.0;
   double rightLocation = 1.0;
   List<double> topLocations = List<double>.filled(15, 1.0);
@@ -20,7 +21,6 @@ class GameAnimationProvider extends ChangeNotifier {
       rightLocation = width * (Random.secure().nextInt(85).toDouble() / 100);
       topLocations[i] = topLocation;
       rightLocations[i] = rightLocation;
-      
     }
   }
 
@@ -42,5 +42,15 @@ class GameAnimationProvider extends ChangeNotifier {
         boolsList[i] = true;
       }
     }
+  }
+
+  void increaseMark() {
+    mark++;
+    notifyListeners();
+  }
+
+  void restartMark() {
+    mark = 0;
+    notifyListeners();
   }
 }

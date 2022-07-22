@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tap_tap_tap/constants.dart';
+import 'package:tap_tap_tap/reuseable_widgets/show_animation.dart';
 import 'package:tap_tap_tap/services/audio_provider.dart';
 import 'package:tap_tap_tap/services/screen_animation_provider.dart';
-import 'package:tap_tap_tap/reusable_widgets.dart';
 import 'package:tap_tap_tap/screens/menu_screen.dart';
 import 'package:tap_tap_tap/theme.dart';
 
@@ -20,9 +20,14 @@ class _StartScreenState extends State<StartScreen> {
   final randomNumber = Random().nextInt(6);
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     var player = Provider.of<AudioProvider>(context, listen: false);
     player.playAudio(url[randomNumber]);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return const AnimatedScreen();
   }
 }
@@ -50,21 +55,14 @@ class _AnimatedScreenState extends State<AnimatedScreen> {
       backgroundColor: blackColor,
       body: SafeArea(
         maintainBottomViewPadding: true,
-        child: Consumer<ScreenAnimationProvider>(
-          builder: ((context, provider, child) {
-            return Stack(
-              children: [
-                for (i = 0; i < 15; i++)
-                  ShowAnimation(
-                    i: i,
-                    provider: provider,
-                  ),
-                StartButton(
-                  provider: provider,
-                ),
-              ],
-            );
-          }),
+        child: Stack(
+          children: [
+            for (i = 0; i < 15; i++)
+              ShowAnimation(
+                i: i,
+              ),
+            const StartButton(),
+          ],
         ),
       ),
     );
@@ -74,9 +72,7 @@ class _AnimatedScreenState extends State<AnimatedScreen> {
 class StartButton extends StatelessWidget {
   const StartButton({
     Key? key,
-    required this.provider,
   }) : super(key: key);
-  final ScreenAnimationProvider provider;
 
   @override
   Widget build(BuildContext context) {
