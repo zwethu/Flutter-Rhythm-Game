@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
@@ -39,20 +37,18 @@ class _GameScreenState extends State<GameScreen> {
               GameAnimationProvider(deviceWidth, deviceHeight)),
         ),
       ],
-      child: Consumer<GameAudioProvider>(
-        builder: ((context, player, child) {
-          print('object');
+      child: Consumer2<GameAudioProvider,GameAnimationProvider>(
+        builder: ((context, player, animator, child) {
           player.playGameAudio(widget.song);
           player.player.playerStateStream.listen((state) {
             if (state.processingState == ProcessingState.completed) {
               if (player.songEnd) {
-                var provider = context.read<GameAnimationProvider>();
                 showDialog(
                   barrierDismissible: false,
                   context: context,
                   builder: (context) => showBox(
                     player,
-                    provider,
+                    animator,
                   ),
                 );
               }
@@ -65,7 +61,7 @@ class _GameScreenState extends State<GameScreen> {
               showDialog(
                 barrierDismissible: false,
                 context: context,
-                builder: (context) => showPausedBox(player),
+                builder: (context) => showPausedBox(player,animator),
               );
               return false;
             },
@@ -121,7 +117,7 @@ class _GameScreenState extends State<GameScreen> {
                                   showDialog(
                                     barrierDismissible: false,
                                     context: context,
-                                    builder: (context) => showPausedBox(player),
+                                    builder: (context) => showPausedBox(player,animator),
                                   );
                                 },
                                 icon: !player.pauseGame
@@ -211,15 +207,14 @@ class _GameScreenState extends State<GameScreen> {
                   provider.restartMark();
                   Navigator.pop(context);
                   Navigator.pop(context);
-                   Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GameScreen(
-                              song: widget.song,
-                            ),
-                          ),
-                        );
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GameScreen(
+                        song: widget.song,
+                      ),
+                    ),
+                  );
                 },
                 child: Text(
                   'Replay',
@@ -233,7 +228,7 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-  AlertDialog showPausedBox(var player) {
+  AlertDialog showPausedBox(var player, var provider) {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -257,7 +252,6 @@ class _GameScreenState extends State<GameScreen> {
                   player.pausePlayer();
                   Navigator.pop(context);
                   Navigator.pop(context);
-                  var provider = context.read<GameAnimationProvider>();
                   provider.restartMark();
                 },
                 child: Text(

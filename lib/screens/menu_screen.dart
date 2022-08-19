@@ -24,69 +24,68 @@ class _MenuScreenState extends State<MenuScreen> {
       body: SafeArea(
         maintainBottomViewPadding: true,
         child: Stack(
-              children: [
-                for (i = 0; i < 15; i++)
-                  ShowAnimation(i: i),
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: (() {
-                          var player = Provider.of<AudioProvider>(context,
-                              listen: false);
-                          player.pausePlayer();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PlaylistScreen(),
-                            ),
-                          );
-                          var provider = context.read<ScreenAnimationProvider>();
-                          provider.pauseAnimation();
-                        }),
-                        child: const MenuItem(
-                          icon: Icons.queue_music_rounded,
-                          title: 'Playlist',
+          children: [
+            for (i = 0; i < 15; i++) ShowAnimation(i: i),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: (() {
+                      var player =
+                          Provider.of<AudioProvider>(context, listen: false);
+                      player.pausePlayer();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PlaylistScreen(),
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      GestureDetector(
-                        onTap: () {
-                          var player = Provider.of<AudioProvider>(context,
-                              listen: false);
-                          player.pausePlayer();
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PlaylistScreen(),
-                            ),
-                          );
-                          var provider = context.read<ScreenAnimationProvider>();
-                          
-                          provider.resumeAnimation();
-                        },
-                        child: const MenuItem(
-                          icon: Icons.tune_rounded,
-                          title: 'Settings',
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const MenuItem(
-                          icon: Icons.arrow_back_rounded,
-                          title: 'Back',
-                        ),
-                      ),
-                    ],
+                      );
+                      var provider = context.read<ScreenAnimationProvider>();
+                      provider.pauseAnimation();
+                    }),
+                    child: const MenuItem(
+                      icon: Icons.queue_music_rounded,
+                      title: 'Playlist',
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
+                      var player =
+                          Provider.of<AudioProvider>(context, listen: false);
+                      player.pausePlayer();
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PlaylistScreen(),
+                        ),
+                      );
+                      var provider = context.read<ScreenAnimationProvider>();
+
+                      provider.resumeAnimation();
+                    },
+                    child: const MenuItem(
+                      icon: Icons.tune_rounded,
+                      title: 'Settings',
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const MenuItem(
+                      icon: Icons.arrow_back_rounded,
+                      title: 'Back',
+                    ),
+                  ),
+                ],
+              ),
             ),
+          ],
+        ),
       ),
     );
   }

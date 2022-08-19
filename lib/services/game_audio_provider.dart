@@ -20,15 +20,14 @@ class GameAudioProvider extends ChangeNotifier {
           isFirstTime = false;
         });
       } else if (input
-          .contains('/data/user/0/com.example.tap_tap_tap/cache/filepicker/')) {
-        await player.setFilePath(input).then((value) {
+          .contains('/data/user/0/com.example.tap_tap_tap/cache/file_picker/')) {
+        await player.setFilePath(input).then((value) async {
           getDuration(value!);
+          await player.play();
+          isFirstTime = false;
         });
-        await player.play();
-        isFirstTime = false;
       }
     }
-   
   }
 
   void getDuration(Duration time) {
@@ -51,10 +50,9 @@ class GameAudioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void replay(){
+  void replay() {
     isFirstTime = true;
     songEnd = false;
     notifyListeners();
   }
 }
- 
