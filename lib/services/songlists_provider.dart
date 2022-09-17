@@ -24,7 +24,7 @@ class SonglistsProvider extends ChangeNotifier {
     var data = box?.get('songs');
     if (data != null) {
       pathsList = data;
-    }
+    } 
   }
 
   void addSong(String input) {
@@ -34,9 +34,10 @@ class SonglistsProvider extends ChangeNotifier {
     notifyListeners();
 
     box?.put('songs', pathsList);
+    
   }
 
-  void deleteSong(int index) {
+  void  deleteSong(int index) {
     pathsList?.removeAt(index);
     songs?.removeAt(index);
     notifyListeners();

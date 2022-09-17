@@ -111,7 +111,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    data.deleteAll();
+                                    data.deleteSong(index);
                                   },
                                   icon: const Icon(
                                     Icons.delete_rounded,
