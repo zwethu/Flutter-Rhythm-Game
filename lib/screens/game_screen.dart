@@ -30,14 +30,14 @@ class _GameScreenState extends State<GameScreen> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: ((context) => GameAudioProvider()),
+          create: ((context) => GameAudioProvider()), 
         ),
         ChangeNotifierProvider(
           create: ((context) =>
               GameAnimationProvider(deviceWidth, deviceHeight)),
         ),
       ],
-      child: Consumer2<GameAudioProvider,GameAnimationProvider>(
+      child: Consumer2<GameAudioProvider, GameAnimationProvider>(
         builder: ((context, player, animator, child) {
           player.playGameAudio(widget.song);
           player.player.playerStateStream.listen((state) {
@@ -61,7 +61,7 @@ class _GameScreenState extends State<GameScreen> {
               showDialog(
                 barrierDismissible: false,
                 context: context,
-                builder: (context) => showPausedBox(player,animator),
+                builder: (context) => showPausedBox(player, animator),
               );
               return false;
             },
@@ -117,7 +117,8 @@ class _GameScreenState extends State<GameScreen> {
                                   showDialog(
                                     barrierDismissible: false,
                                     context: context,
-                                    builder: (context) => showPausedBox(player,animator),
+                                    builder: (context) =>
+                                        showPausedBox(player, animator),
                                   );
                                 },
                                 icon: !player.pauseGame

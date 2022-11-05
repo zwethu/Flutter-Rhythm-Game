@@ -38,10 +38,9 @@ dependencies:
   google_fonts: ^3.0.1
   just_audio: ^0.9.27
   file_picker: ^4.6.1
-
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  ripple_animation: ^0.0.1+2
+  simple_ripple_animation: ^0.0.3
 
 
 dev_dependencies:
